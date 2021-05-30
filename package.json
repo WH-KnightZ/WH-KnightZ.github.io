@@ -2,7 +2,7 @@
   "name": "hb-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://wh-knightz.github.io/",
+  "homepage": "https://wh-knightz.github.io",
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
     "@coreui/icons": "^2.0.0-rc.0",
