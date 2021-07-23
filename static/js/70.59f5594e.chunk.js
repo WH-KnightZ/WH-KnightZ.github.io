@@ -1,2 +1,0 @@
-(this["webpackJsonphb-frontend"]=this["webpackJsonphb-frontend"]||[]).push([[70],{1017:function(n,t,e){"use strict";e.r(t);var i=e(3);e(1);t.default=function(n){return Object(i.jsx)("div",{style:{display:"flex",justifyContent:"center",alignItems:"center",height:"80vh",fontSize:30},children:"Communication Management"})}}}]);
-//# sourceMappingURL=70.59f5594e.chunk.js.map
