@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { ModalConfirm, ToastContainer } from 'components';
 
-// Admin
-const LayoutAdmin = React.lazy(() => import('views/admin/containers/Layout'));
+const Layout = React.lazy(() => import('views/containers/Layout'));
 
 const App: React.FC = () => {
   const modalConfirm = useSelector((state: RootState) => state.modalConfirm);
@@ -17,7 +16,7 @@ const App: React.FC = () => {
       <ToastContainer />
       <Suspense fallback={loading}>
         <Switch>
-          <Route path="/" component={LayoutAdmin} />
+          <Route path="/" component={Layout} />
         </Switch>
       </Suspense>
     </>

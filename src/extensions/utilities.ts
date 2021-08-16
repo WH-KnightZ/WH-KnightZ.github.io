@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { userAPIs } from './configs';
 import { ls } from './extensions';
 
 /**
@@ -35,46 +34,6 @@ export const addUserLS = (user: any) => {
  */
 export const removeUserLS = () => {
   ls.remove('user');
-};
-
-/**
- * Sign in
- */
-export const actionSignIn = ({
-  callApi,
-  history,
-  dispatch,
-  email,
-  password,
-  callback,
-  isAuto,
-}: {
-  callApi: any;
-  history: any;
-  dispatch: any;
-  email: string;
-  password: string;
-  callback?: any;
-  isAuto?: boolean;
-}) => {
-  callApi(
-    { method: 'post', api: userAPIs.login(), body: { email, password }, hideToast: isAuto },
-    ({ status, data }: any) => {
-      if (status) {
-        addUserLS({ email, password });
-        dispatch({ type: 'SIGN_IN', payload: data });
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.access_token;
-        if (!isAuto) {
-          if (data.is_admin) {
-            history.push('/admin/users');
-            return;
-          }
-          history.push('/');
-        }
-      }
-      callback?.();
-    },
-  );
 };
 
 /**

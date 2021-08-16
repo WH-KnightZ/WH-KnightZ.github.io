@@ -12,7 +12,7 @@ export const authReducer = (state = initialState, action: { type: string; payloa
       return { ...action.payload };
 
     case SIGN_OUT:
-      return {};
+      return { ...initialState };
 
     case REFRESH_TOKEN:
     case UPDATE_PROFILE:

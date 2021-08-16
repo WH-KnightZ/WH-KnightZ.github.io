@@ -96,7 +96,15 @@ const AccountPopover: React.FC = () => {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined" onClick={() => actionSignOut({ history, dispatch })}>
+          <Button
+            fullWidth
+            color="inherit"
+            variant="outlined"
+            onClick={() => {
+              actionSignOut({ history, dispatch });
+              setOpen(false);
+            }}
+          >
             {t('logout')}
           </Button>
         </Box>

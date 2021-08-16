@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import {
+  changeScreen,
   hideModalConfirm,
   RootState,
   showModalConfirm,
@@ -77,6 +78,17 @@ export const useToasts = () => {
     () => ({
       createToast: (payload: ToastType) => dispatch(createToast(payload)),
       removeToast: (key: number) => dispatch(removeToast(key)),
+    }),
+    [dispatch],
+  );
+};
+
+export const useScreen = () => {
+  const dispatch = useDispatch();
+
+  return useMemo(
+    () => ({
+      changeScreen: (payload: string) => dispatch(changeScreen(payload)),
     }),
     [dispatch],
   );

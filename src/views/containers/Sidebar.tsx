@@ -1,31 +1,27 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
-import { Box, Link, Drawer, Typography, Avatar, Stack } from '@material-ui/core';
+import { Box, Link, Drawer, Typography, Avatar, Stack, FormLabel } from '@material-ui/core';
 import { MHidden, Logo, NavSection, Scrollbar } from 'components';
 import { useAuth } from 'extensions/hooks';
 import { imgLogo } from 'extensions/extensions';
+import { SCREENS } from 'extensions/constants';
 
 const sidebarConfig = [
   {
-    title: 'user',
-    path: '/admin/users',
-    icon: 'supervisor_account',
+    title: 'Đăng Nhập',
+    path: SCREENS.LOGIN,
+    icon: 'account_circle',
   },
   {
-    title: 'category',
-    path: '/admin/categories',
-    icon: 'category',
+    title: 'Auto Book',
+    path: SCREENS.AUTO_BOOK,
+    icon: 'book_online',
   },
   {
-    title: 'product',
-    path: '/admin/products',
-    icon: 'chair',
-  },
-  {
-    title: 'blog',
-    path: '/admin/blogs',
-    icon: 'feed',
+    title: 'Chưa Nghĩ Ra',
+    path: SCREENS.MORE,
+    icon: 'more_time',
   },
 ];
 
@@ -113,6 +109,9 @@ const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
         >
           {imgLogo}
         </Stack>
+        <Box style={{ margin: '28px auto 12px', textAlign: 'center' }}>
+          <FormLabel style={{ fontSize: 15 }}>by khanh.nguyen@boot.ai</FormLabel>
+        </Box>
       </Box>
     </Scrollbar>
   );

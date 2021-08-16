@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom';
+import React from 'react';
+import { matchPath } from 'react-router-dom';
 import { alpha, useTheme, styled } from '@material-ui/core/styles';
-import { Box, List, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@material-ui/core';
+import { Box, List, ListItemText, ListItemIcon, ListItemButton } from '@material-ui/core';
 import { MaterialIcon } from 'components';
 import { useTranslation } from 'react-i18next';
+import { useScreen } from 'extensions/hooks';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const ListItemStyle = styled((props: any) => <ListItemButton disableGutters {...props} />)(({ theme }) => ({
   ...theme.typography.body2,
@@ -38,14 +41,12 @@ const ListItemIconStyle = styled(ListItemIcon)({
 const NavItem = ({ item, active }: any) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const isActiveRoot = active(item.path);
-  let { title, path, icon, info, children } = item;
-  title = t(title);
-  const [open, setOpen] = useState(isActiveRoot);
+  const { changeScreen } = useScreen();
 
-  const handleOpen = () => {
-    setOpen((prev: any) => !prev);
-  };
+  let { title, path, icon, info } = item;
+  title = t(title);
+
+  const isActiveRoot = active(path);
 
   const activeRootStyle = {
     color: 'primary.main',
@@ -54,76 +55,9 @@ const NavItem = ({ item, active }: any) => {
     '&:before': { display: 'block' },
   };
 
-  const activeSubStyle = {
-    color: 'text.primary',
-    fontWeight: 'fontWeightMedium',
-  };
-
-  if (children) {
-    return (
-      <>
-        <ListItemStyle
-          onClick={handleOpen}
-          sx={{
-            ...(isActiveRoot && activeRootStyle),
-          }}
-        >
-          <ListItemIconStyle>
-            <MaterialIcon icon={icon} />
-          </ListItemIconStyle>
-          <ListItemText disableTypography primary={title} />
-          {info && info}
-          <i className="material-icons">facebook</i>
-        </ListItemStyle>
-
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {children.map((item: any) => {
-              const { title, path } = item;
-              const isActiveSub = active(path);
-
-              return (
-                <ListItemStyle
-                  key={title}
-                  component={RouterLink}
-                  to={path}
-                  sx={{
-                    ...(isActiveSub && activeSubStyle),
-                  }}
-                >
-                  <ListItemIconStyle>
-                    <Box
-                      component="span"
-                      sx={{
-                        width: 4,
-                        height: 4,
-                        display: 'flex',
-                        borderRadius: '50%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        bgcolor: 'text.disabled',
-                        transition: (theme) => theme.transitions.create('transform'),
-                        ...(isActiveSub && {
-                          transform: 'scale(2)',
-                          bgcolor: 'primary.main',
-                        }),
-                      }}
-                    />
-                  </ListItemIconStyle>
-                  <ListItemText disableTypography primary={title} />
-                </ListItemStyle>
-              );
-            })}
-          </List>
-        </Collapse>
-      </>
-    );
-  }
-
   return (
     <ListItemStyle
-      component={RouterLink}
-      to={path}
+      onClick={() => changeScreen(path)}
       sx={{
         ...(isActiveRoot && activeRootStyle),
       }}
@@ -143,8 +77,9 @@ interface Props {
 }
 
 const NavSection: React.FC<Props> = ({ navConfig, ...other }) => {
-  const { pathname } = useLocation();
-  const match = (path: any) => (path ? !!matchPath(pathname, { path, exact: true }) : false);
+  const screen = useSelector((state: RootState) => state.screen);
+
+  const match = (path: any) => path === screen;
 
   return (
     <Box {...other}>
