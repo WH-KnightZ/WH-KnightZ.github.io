@@ -1,2 +1,0 @@
-(this["webpackJsonphb-frontend"]=this["webpackJsonphb-frontend"]||[]).push([[73],{1018:function(t,n,r){"use strict";r.r(n);var a=r(3),e=(r(1),r(737));n.default=function(t){var n=t.match.params.id;return Object(a.jsx)(e.a,{trainerId:n})}}}]);
-//# sourceMappingURL=73.407cece5.chunk.js.map
