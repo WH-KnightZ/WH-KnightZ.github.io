@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/views/admin/users/Users.scss"],"names":[],"mappings":"AACE,YACE,aAAc","file":"5.38096f57.chunk.css","sourcesContent":[".Users {\r\n  &-page {\r\n    margin: 20px 0;\r\n  }\r\n}\r\n"]}
