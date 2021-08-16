@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Toast: React.FC<Props> = (props) => {
-  const { type = 'success', message = 'This is a Toast!', duration = 3000, onClick, onClose } = props;
+  const { type = 'success' as any, message = 'This is a Toast!', duration = 3000, onClick, onClose } = props;
   const [state, setState] = useState<'' | 'slide-in' | 'fade-out'>('');
   const timeout = useRef<any>();
   const ref = useRef<any>();
@@ -57,7 +57,7 @@ const Toast: React.FC<Props> = (props) => {
       ref={ref}
       style={{ maxHeight: isFadeOut ? 0 : ref.current?.scrollHeight, marginBottom: isFadeOut ? 0 : 8 }}
     >
-      <Alert onClose={close} severity={type} variant="filled">
+      <Alert onClose={close} severity={type === true ? 'success' : type || 'error'} variant="filled">
         {message}
       </Alert>
     </div>

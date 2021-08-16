@@ -83,6 +83,7 @@ const Users: React.FC<RouteComponentProps> = () => {
     setAmountOK(0);
     const newAmount = Number(amount);
     const newTime = Number(time) * 60;
+    const newAppointmentType = Number(appointmentType);
     setLoading(true);
     let i = 0;
     interval.current = setInterval(() => {
@@ -90,18 +91,21 @@ const Users: React.FC<RouteComponentProps> = () => {
       let end = begin + newTime;
       const a = {
         appointment_type: Number(appointmentType),
-        result_survey: {},
-        relatives: [
-          {
-            email: 'nguyenkhanhsl1997@gmail.com',
-            first_name: 'Khanh',
-            last_name: 'Nguyen',
-          },
-        ],
+        result_survey: newAppointmentType === 1 ? {} : undefined,
+        relatives:
+          newAppointmentType === 1
+            ? [
+                {
+                  email: 'nguyenkhanhsl1997@gmail.com',
+                  first_name: 'Khanh',
+                  last_name: 'Nguyen',
+                },
+              ]
+            : undefined,
         appointment_time_begin: begin,
         appointment_time_end: end,
         cost: 54.0,
-        selected_treatments_id: 2,
+        selected_treatments_id: newAppointmentType === 1 ? 2 : undefined,
         customer_gender: 0,
         phone_number: '+843456789',
         street: 'Ha Noi',
