@@ -1,0 +1,19 @@
+.LayoutAdmin {
+  display: flex;
+  min-height: 100%;
+  overflow: hidden;
+
+  &-main {
+    flex-grow: 1;
+    overflow: auto;
+    min-height: 100%;
+    padding-top: 88px;
+    padding-bottom: 20px;
+
+    @media screen and (max-width: 860px) {
+      padding-top: 116px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}

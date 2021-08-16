@@ -1,0 +1,24 @@
+.Searchbar {
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  height: 92px;
+  backdrop-filter: blur(6px);
+  --webkit-backdropfilter: blur(6px);
+  padding: 0 30px;
+  box-shadow: 0 8px 16px 0 #0002;
+  background-color: #fffa;
+
+  @media screen and (max-width: 860px) {
+    height: 64px;
+    padding: 0 20px;
+  }
+
+  button {
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,82 @@
+@mixin h1 {
+  margin-bottom: 0;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 38px;
+  letter-spacing: -0.01em;
+  @media screen and (max-width: 860px) {
+    font-size: 39px;
+    line-height: 42px;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 31px;
+    line-height: 35px;
+  }
+}
+
+@mixin h2 {
+  margin-bottom: 0;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 31px;
+  letter-spacing: -0.01em;
+}
+
+@mixin h3 {
+  margin-bottom: 0;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: -0.01em;
+  @media screen and (max-width: 860px) {
+    font-size: 21px;
+    line-height: 25px;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
+
+@mixin h4 {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0.005em;
+  @media screen and (max-width: 480px) {
+    font-size: 17px;
+    line-height: 20px;
+  }
+}
+
+@mixin h5 {
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  @media screen and (max-width: 860px) {
+    letter-spacing: 0.02em;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@mixin h6 {
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.01em;
+  @media screen and (max-width: 860px) {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 16px;
+    line-height: 19px;
+  }
+}

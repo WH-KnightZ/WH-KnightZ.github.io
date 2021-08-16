@@ -1,0 +1,16 @@
+.MenuPopover {
+  &-arrow {
+    top: -7px;
+    z-index: 1;
+    width: 12px;
+    right: 20px;
+    height: 12px;
+    content: '';
+    position: absolute;
+    border-radius: 0 0 4px 0;
+    transform: rotate(-135deg);
+    background: white;
+    border-right: solid 1px #919eab25;
+    border-bottom: solid 1px #919eab25;
+  }
+}

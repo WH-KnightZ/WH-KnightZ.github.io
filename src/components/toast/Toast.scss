@@ -1,0 +1,18 @@
+.toast-container {
+  box-sizing: border-box;
+  position: fixed;
+  top: 20px;
+  right: -320px;
+  width: 660px;
+  z-index: 9999;
+}
+
+.toast {
+  width: 320px;
+  margin-left: 340px;
+  transition: all 0.4s ease;
+
+  &.slide-in {
+    margin-left: 0;
+  }
+}
