@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@material-ui/core';
+import { Box, Button, Container, Link, Typography } from '@material-ui/core';
 import React from 'react';
 
 const More: React.FC = () => {
@@ -6,8 +6,13 @@ const More: React.FC = () => {
     <Container>
       <Box sx={{ margin: 'auto', textAlign: 'center' }}>
         <Typography sx={{ color: 'text.secondary', fontSize: 17 }}>
-          Hiện chưa biết cho gì vào đây! Nếu ai muốn thêm tool gì đó hay ho có thể ping{' '}
-          <span style={{ color: '#00AB55' }}>khanh.nguyen@boot.ai</span> Tool sẽ có sau vài phút.
+          Hiện chưa biết cho gì vào đây! Nếu ai muốn thêm tool gì đó hay ho có thể ping
+          <Link href="https://www.messenger.com/t/WH.KnightZ" underline="none" target="_blank">
+            {' '}
+            khanh.nguyen@boot.ai
+          </Link>
+          <br />
+          Tool sẽ có sau vài phút.
         </Typography>
 
         <Box

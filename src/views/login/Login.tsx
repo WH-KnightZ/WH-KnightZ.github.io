@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       callApi(
         { method: 'post', api: 'user/auth/signin', body: { email, password }, loading: true },
         ({ status, data }) => {
-          if (status) {
+          if (status === 'success') {
             axios.defaults.headers.common['Authorization'] = data.id_token;
             ls.set('user', { email, password });
             updateProfile({
