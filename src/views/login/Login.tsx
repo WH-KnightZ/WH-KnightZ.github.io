@@ -61,40 +61,42 @@ const Login: React.FC = () => {
   };
 
   return (
-    <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3} my={3}>
-          <FocusInput
-            autoComplete="email"
-            type="email"
-            label="Email"
-            {...getFieldProps('email')}
-            invalid={!!values.email && !!errors.email}
-            error="Email không hợp lệ!"
-            disabled={loading}
-          />
+    <div style={{ maxWidth: 500, margin: '0 auto' }}>
+      <FormikProvider value={formik}>
+        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <Stack spacing={3} my={3}>
+            <FocusInput
+              autoComplete="email"
+              type="email"
+              label="Email"
+              {...getFieldProps('email')}
+              invalid={!!values.email && !!errors.email}
+              error="Email không hợp lệ!"
+              disabled={loading}
+            />
 
-          <FocusInput
-            autoComplete="new-password"
-            label="Mật Khẩu"
-            {...getFieldProps('password')}
-            invalid={!!values.password && !!errors.password}
-            error=""
-            disabled={loading}
-          />
+            <FocusInput
+              autoComplete="new-password"
+              label="Mật Khẩu"
+              {...getFieldProps('password')}
+              invalid={!!values.password && !!errors.password}
+              error=""
+              disabled={loading}
+            />
 
-          <Select style={{ width: '100%' }} value={env} onChange={changeEnv} disabled={loading}>
-            <MenuItem value="STG">Môi trường STG</MenuItem>
-            <MenuItem value="UAT">Môi trường UAT</MenuItem>
-            <MenuItem value="PRD">Môi trường PRD</MenuItem>
-          </Select>
-        </Stack>
+            <Select style={{ width: '100%' }} value={env} onChange={changeEnv} disabled={loading}>
+              <MenuItem value="STG">Môi trường STG</MenuItem>
+              <MenuItem value="UAT">Môi trường UAT</MenuItem>
+              <MenuItem value="PRD">Môi trường PRD</MenuItem>
+            </Select>
+          </Stack>
 
-        <LoadingButton loading={loading} fullWidth size="large" type="submit" variant="contained" disabled={!isValid}>
-          Đăng Nhập
-        </LoadingButton>
-      </Form>
-    </FormikProvider>
+          <LoadingButton loading={loading} fullWidth size="large" type="submit" variant="contained" disabled={!isValid}>
+            Đăng Nhập
+          </LoadingButton>
+        </Form>
+      </FormikProvider>
+    </div>
   );
 };
 

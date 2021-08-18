@@ -44,9 +44,7 @@ const Layout: React.FC<RouteComponentProps> = () => {
               </Typography>
             </Stack>
 
-            <div style={{ maxWidth: 500, margin: '0 auto' }}>
-              <Render />
-            </div>
+            <Render />
           </Container>
         </Page>
       </div>

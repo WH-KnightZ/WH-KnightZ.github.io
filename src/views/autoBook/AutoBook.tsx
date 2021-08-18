@@ -1,10 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Stack, Select, MenuItem, FormLabel, Box } from '@material-ui/core';
-import { FocusInput, LoadingButton } from 'components';
+import { Stack, Select, MenuItem, FormLabel, Box, Grid, Button } from '@material-ui/core';
+import { FocusInput, LoadingButton, MaterialIcon } from 'components';
 import { useApi, useAuth, useLoading, useModalConfirm, useScreen } from 'extensions/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { SCREENS } from 'extensions/constants';
+import ModalRelative from './ModalRelative';
+
+const initialValues = {
+  email: '',
+  first_name: '',
+  last_name: '',
+};
+
+type RelativeType = {
+  email: string;
+  first_name: string;
+  last_name: string;
+};
 
 const Users: React.FC = () => {
   const { showModalConfirm, hideModalConfirm } = useModalConfirm();
@@ -17,6 +30,23 @@ const Users: React.FC = () => {
   const [amount, setAmount] = useState(15);
   const [time, setTime] = useState(15);
   const [amountOK, setAmountOK] = useState(0);
+  const [modalRelative, setModalRelative] = useState<{ type: 'create' | 'update'; show: boolean; initialValues: any }>({
+    show: false,
+    type: 'create',
+    initialValues,
+  });
+  const [relatives, setRelatives] = useState<RelativeType[]>([
+    {
+      email: 'hang.bui@boot.ai',
+      first_name: 'Hang',
+      last_name: 'Bui',
+    },
+    {
+      email: 'lethihuong_t61@hus.edu.vn',
+      first_name: 'Huong',
+      last_name: 'Le',
+    },
+  ]);
 
   const interval = useRef<any>();
 
@@ -61,6 +91,7 @@ const Users: React.FC = () => {
                   first_name: 'Khanh',
                   last_name: 'Nguyen',
                 },
+                ...relatives,
               ]
             : undefined,
         appointment_time_begin: begin,
@@ -86,6 +117,33 @@ const Users: React.FC = () => {
     }, 500);
   };
 
+  const renderRelative = (relative: RelativeType) => {
+    return (
+      <Stack key={relative.email} direction="row" spacing={2} mb={3}>
+        <FocusInput size="small" type="email" label="Email" value={relative.email} name="email" readOnly />
+        <Stack direction="row" spacing={1}>
+          <Button
+            variant="contained"
+            size="small"
+            style={{ minWidth: 40, width: 40 }}
+            onClick={() => setModalRelative({ show: true, type: 'update', initialValues: relative })}
+          >
+            <MaterialIcon icon="edit" />
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            style={{ minWidth: 40, width: 40 }}
+            color="error"
+            onClick={() => setRelatives(relatives.filter((_relative) => _relative.email !== relative.email))}
+          >
+            <MaterialIcon icon="delete" />
+          </Button>
+        </Stack>
+      </Stack>
+    );
+  };
+
   useEffect(() => {
     if (!auth.id_token)
       showModalConfirm({
@@ -102,76 +160,99 @@ const Users: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <Stack my={3} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 100 }} mr={3}>
-          <FormLabel>Book cho:</FormLabel>
-        </Box>
-        <Select
-          style={{ width: '100%' }}
-          value={appointmentType}
-          onChange={(e: any) => setAppointmentType(e.target.value)}
-        >
-          <MenuItem value={1}>Nurse</MenuItem>
-          <MenuItem value={2}>Assistant</MenuItem>
-        </Select>
-      </Stack>
-      <Stack my={3} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 100 }} mr={3}>
-          <FormLabel>Thời gian:</FormLabel>
-        </Box>
-        <Select style={{ width: '100%' }} value={time} onChange={(e: any) => setTime(e.target.value)}>
-          <MenuItem value={15}>15 phút</MenuItem>
-          <MenuItem value={30}>30 phút</MenuItem>
-          <MenuItem value={45}>45 phút</MenuItem>
-          <MenuItem value={60}>1 tiếng</MenuItem>
-        </Select>
-      </Stack>
-      <Stack my={3} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 100 }} mr={3}>
-          <FormLabel style={{ width: 100 }}>Số lượng:</FormLabel>
-        </Box>
-        <FocusInput
-          type="number"
-          label="Số lượng"
-          value={amount.toString()}
-          onChange={(e: any) => setAmount(e.target.value)}
-          name="amount"
-          disabled={loading}
-        />
-      </Stack>
-      <Stack display="flex" flexDirection="row" my={3}>
-        <LoadingButton
-          loading={loading}
-          fullWidth
-          size="large"
-          variant="contained"
-          style={{ marginRight: 20 }}
-          onClick={book}
-        >
-          Book
-        </LoadingButton>
-        <LoadingButton
-          loading={false}
-          fullWidth
-          size="large"
-          variant="contained"
-          color="error"
-          disabled={!loading}
-          onClick={stop}
-        >
-          Dừng
-        </LoadingButton>
-      </Stack>
-      {loading && (
-        <Stack display="flex" flexDirection="row">
-          <Box style={{ minWidth: 100 }} mr={3}>
-            <FormLabel style={{ width: 100 }}>
-              Đã book được {amountOK}/{amount} appointments
-            </FormLabel>
+    <div style={{ margin: '0 30px' }}>
+      <ModalRelative
+        {...modalRelative}
+        setRelatives={setRelatives}
+        onClose={() => setModalRelative({ ...modalRelative, show: false })}
+      />
+      <Grid container spacing={3}>
+        <Grid item xs={7}>
+          <Stack my={3} display="flex" flexDirection="row" alignItems="center">
+            <Box style={{ minWidth: 100 }} mr={3}>
+              <FormLabel>Book cho:</FormLabel>
+            </Box>
+            <Select
+              style={{ width: '100%' }}
+              value={appointmentType}
+              onChange={(e: any) => setAppointmentType(e.target.value)}
+            >
+              <MenuItem value={1}>Nurse</MenuItem>
+              <MenuItem value={2}>Assistant</MenuItem>
+            </Select>
+          </Stack>
+          <Stack my={3} display="flex" flexDirection="row" alignItems="center">
+            <Box style={{ minWidth: 100 }} mr={3}>
+              <FormLabel>Thời gian:</FormLabel>
+            </Box>
+            <Select style={{ width: '100%' }} value={time} onChange={(e: any) => setTime(e.target.value)}>
+              <MenuItem value={15}>15 phút</MenuItem>
+              <MenuItem value={30}>30 phút</MenuItem>
+              <MenuItem value={45}>45 phút</MenuItem>
+              <MenuItem value={60}>1 tiếng</MenuItem>
+            </Select>
+          </Stack>
+          <Stack my={3} display="flex" flexDirection="row" alignItems="center">
+            <Box style={{ minWidth: 100 }} mr={3}>
+              <FormLabel style={{ width: 100 }}>Số lượng:</FormLabel>
+            </Box>
+            <FocusInput
+              type="number"
+              label="Số lượng"
+              value={amount.toString()}
+              onChange={(e: any) => setAmount(e.target.value)}
+              name="amount"
+              disabled={loading}
+            />
+          </Stack>
+          <Stack display="flex" flexDirection="row" my={3}>
+            <LoadingButton
+              loading={loading}
+              fullWidth
+              size="large"
+              variant="contained"
+              style={{ marginRight: 20 }}
+              onClick={book}
+            >
+              Book
+            </LoadingButton>
+            <LoadingButton
+              loading={false}
+              fullWidth
+              size="large"
+              variant="contained"
+              color="error"
+              disabled={!loading}
+              onClick={stop}
+            >
+              Dừng
+            </LoadingButton>
+          </Stack>
+          {loading && (
+            <Stack display="flex" flexDirection="row">
+              <Box style={{ minWidth: 100 }} mr={3}>
+                <FormLabel style={{ width: 100 }}>
+                  Đã book được {amountOK}/{amount} appointments
+                </FormLabel>
+              </Box>
+            </Stack>
+          )}
+        </Grid>
+        <Grid item xs={5} style={{ paddingTop: 0 }}>
+          <Box display="flex" style={{ justifyContent: 'space-between' }}>
+            <div />
+            <Button
+              size="small"
+              variant="contained"
+              style={{ marginBottom: 18 }}
+              onClick={() => setModalRelative({ show: true, type: 'create', initialValues })}
+            >
+              Thêm Người Thân
+            </Button>
           </Box>
-        </Stack>
-      )}
+          {relatives.map(renderRelative)}
+        </Grid>
+      </Grid>
     </div>
   );
 };

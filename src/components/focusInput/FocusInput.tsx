@@ -18,6 +18,8 @@ interface Props {
   invalid?: boolean;
   variant?: 'outlined' | 'standard' | 'filled';
   margin?: string;
+  readOnly?: boolean;
+  size?: any;
 }
 
 const FocusInput: React.FC<Props> = (props) => {
