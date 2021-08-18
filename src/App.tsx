@@ -15,12 +15,12 @@ const App: React.FC = () => {
     <>
       <ModalConfirm {...modalConfirm} />
       <ToastContainer />
-      <MessengerCustomerChat pageId="102058578863470" appId="1995725250604441" htmlRef="<REF_STRING>" />
       <Suspense fallback={loading}>
         <Switch>
           <Route path="/" component={Layout} />
         </Switch>
       </Suspense>
+      <MessengerCustomerChat pageId="102058578863470" appId="1995725250604441" language="vi_VN" />
     </>
   );
 };
