@@ -75,6 +75,7 @@
     ]
   },
   "devDependencies": {
+    "@types/qs": "^6.9.7",
     "@types/react-router-dom": "^5.1.8",
     "@types/react-router-redux": "^5.0.19",
     "eslint": "^7.2.0",

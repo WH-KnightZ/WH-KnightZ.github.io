@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Stack, Select, MenuItem, FormLabel, Box, Grid, Button } from '@material-ui/core';
+import { Stack, Select, MenuItem, FormLabel, Box, Grid, Button, Checkbox } from '@material-ui/core';
 import { FocusInput, LoadingButton, MaterialIcon } from 'components';
-import { useApi, useAuth, useLoading, useModalConfirm, useScreen } from 'extensions/hooks';
+import { useApi, useAuth, useLoading, useModalConfirm, useScreen, useToasts } from 'extensions/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { SCREENS } from 'extensions/constants';
 import ModalRelative from './ModalRelative';
+import { pay, PaymentType } from './payment';
 
 const initialValues = {
   email: '',
@@ -24,6 +25,7 @@ const Users: React.FC = () => {
   const { startLoading, stopLoading } = useLoading();
   const { callApi } = useApi();
   const { changeScreen } = useScreen();
+  const { createToast } = useToasts();
   const auth = useAuth();
 
   const [appointmentType, setAppointmentType] = useState(1);
@@ -35,6 +37,7 @@ const Users: React.FC = () => {
     type: 'create',
     initialValues,
   });
+  const [autoPay, setAutoPay] = useState(true);
   const [relatives, setRelatives] = useState<RelativeType[]>([
     {
       email: 'hang.bui@boot.ai',
@@ -105,7 +108,19 @@ const Users: React.FC = () => {
         no: '0809',
         place: '0809',
       };
-      callApi({ method: 'post', api: 'consulting/appointments', body: a }, () => {
+      callApi({ method: 'post', api: 'consulting/appointments', body: a }, ({ status, data }) => {
+        if (autoPay && status === 'success') {
+          const { treatments } = data;
+          const payment: PaymentType = {
+            appointmentName: treatments?.diseases_title,
+            appointmentId: data.id,
+            price: treatments?.price,
+            email: auth.email,
+            name: auth.first_name + ' ' + auth.last_name,
+            createToast,
+          };
+          pay(payment);
+        }
         setAmountOK((x) => {
           const newX = x + 1;
           if (newX >= newAmount) stop();
@@ -160,17 +175,17 @@ const Users: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ margin: '0 30px' }}>
+    <div style={{ margin: '0 36px' }}>
       <ModalRelative
         {...modalRelative}
         setRelatives={setRelatives}
         onClose={() => setModalRelative({ ...modalRelative, show: false })}
       />
       <Grid container spacing={3}>
-        <Grid item xs={7}>
+        <Grid item xs={6}>
           <Stack my={3} display="flex" flexDirection="row" alignItems="center">
-            <Box style={{ minWidth: 100 }} mr={3}>
-              <FormLabel>Book cho:</FormLabel>
+            <Box style={{ minWidth: 130 }} mr={3}>
+              <FormLabel style={{ width: 130 }}>Book cho:</FormLabel>
             </Box>
             <Select
               style={{ width: '100%' }}
@@ -182,8 +197,8 @@ const Users: React.FC = () => {
             </Select>
           </Stack>
           <Stack my={3} display="flex" flexDirection="row" alignItems="center">
-            <Box style={{ minWidth: 100 }} mr={3}>
-              <FormLabel>Thời gian:</FormLabel>
+            <Box style={{ minWidth: 130 }} mr={3}>
+              <FormLabel style={{ width: 130 }}>Thời gian:</FormLabel>
             </Box>
             <Select style={{ width: '100%' }} value={time} onChange={(e: any) => setTime(e.target.value)}>
               <MenuItem value={15}>15 phút</MenuItem>
@@ -193,8 +208,8 @@ const Users: React.FC = () => {
             </Select>
           </Stack>
           <Stack my={3} display="flex" flexDirection="row" alignItems="center">
-            <Box style={{ minWidth: 100 }} mr={3}>
-              <FormLabel style={{ width: 100 }}>Số lượng:</FormLabel>
+            <Box style={{ minWidth: 130 }} mr={3}>
+              <FormLabel style={{ width: 130 }}>Số lượng:</FormLabel>
             </Box>
             <FocusInput
               type="number"
@@ -204,6 +219,12 @@ const Users: React.FC = () => {
               name="amount"
               disabled={loading}
             />
+          </Stack>
+          <Stack my={3} display="flex" flexDirection="row" alignItems="center">
+            <Box style={{ minWidth: 130 }} mr={3}>
+              <FormLabel style={{ width: 130 }}>Thanh toán luôn:</FormLabel>
+            </Box>
+            <Checkbox checked={autoPay} onChange={() => setAutoPay(!autoPay)} style={{ marginLeft: 10 }} />
           </Stack>
           <Stack display="flex" flexDirection="row" my={3}>
             <LoadingButton
@@ -238,16 +259,17 @@ const Users: React.FC = () => {
             </Stack>
           )}
         </Grid>
-        <Grid item xs={5} style={{ paddingTop: 0 }}>
+        <Grid item xs={6} style={{ paddingTop: 0 }}>
           <Box display="flex" style={{ justifyContent: 'space-between' }}>
             <div />
             <Button
               size="small"
               variant="contained"
-              style={{ marginBottom: 18 }}
+              style={{ marginBottom: 18, height: 40, fontSize: 15 }}
+              startIcon={<MaterialIcon icon="add" />}
               onClick={() => setModalRelative({ show: true, type: 'create', initialValues })}
             >
-              Thêm Người Thân
+              Người Thân
             </Button>
           </Box>
           {relatives.map(renderRelative)}
