@@ -3,9 +3,12 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from '
 import { FocusInput } from 'components';
 import { Form, FormikProvider, useFormik } from 'formik';
 import React, { useEffect } from 'react';
+import { ls } from 'extensions/extensions';
 
 const Schema = Yup.object().shape({
   email: Yup.string().email('Email không hợp lệ!').required(),
+  first_name: Yup.string().required(),
+  last_name: Yup.string().required(),
 });
 
 interface Props {
@@ -17,7 +20,14 @@ interface Props {
 }
 
 const ModalRelative: React.FC<Props> = (props) => {
-  const { show, type, onClose, initialValues, setRelatives } = props;
+  let { show, type, onClose, initialValues, setRelatives } = props;
+  const relative = ls.get('relative');
+  if (ls && type === 'create')
+    initialValues = {
+      email: relative?.email || '',
+      first_name: relative?.first_name || '',
+      last_name: relative?.last_name || '',
+    };
 
   const formik = useFormik({
     initialValues,
@@ -28,6 +38,7 @@ const ModalRelative: React.FC<Props> = (props) => {
         if (relatives.findIndex((item: any) => item.email === email) !== -1) return relatives;
         return [{ email, first_name, last_name }, ...relatives];
       });
+      if (type === 'create') ls.set('relative', { email, first_name, last_name });
       onClose();
     },
   });
@@ -81,7 +92,12 @@ const ModalRelative: React.FC<Props> = (props) => {
               </Button>
             </Box>
             <Box mr={1} mb={1}>
-              <Button type="submit" variant="contained" color="primary" disabled={!isValid || !dirty}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={!isValid || (type === 'update' ? !dirty : false)}
+              >
                 {type === 'create' ? 'Thêm' : 'Sửa'}
               </Button>
             </Box>

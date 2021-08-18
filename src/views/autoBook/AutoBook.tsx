@@ -109,6 +109,12 @@ const Users: React.FC = () => {
         place: '0809',
       };
       callApi({ method: 'post', api: 'consulting/appointments', body: a }, ({ status, data }) => {
+        const done = () =>
+          setAmountOK((x) => {
+            const newX = x + 1;
+            if (newX >= newAmount) stop();
+            return newX;
+          });
         if (autoPay && status === 'success') {
           const { treatments } = data;
           const payment: PaymentType = {
@@ -118,14 +124,10 @@ const Users: React.FC = () => {
             email: auth.email,
             name: auth.first_name + ' ' + auth.last_name,
             createToast,
+            done,
           };
           pay(payment);
-        }
-        setAmountOK((x) => {
-          const newX = x + 1;
-          if (newX >= newAmount) stop();
-          return newX;
-        });
+        } else done();
       });
       i += 1;
       if (i >= newAmount) clearInterval(interval.current);
@@ -182,8 +184,8 @@ const Users: React.FC = () => {
         onClose={() => setModalRelative({ ...modalRelative, show: false })}
       />
       <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <Stack my={3} display="flex" flexDirection="row" alignItems="center">
+        <Grid item xs={12} md={6} style={{ paddingTop: 58, marginBottom: 12 }}>
+          <Stack mb={3} display="flex" flexDirection="row" alignItems="center">
             <Box style={{ minWidth: 130 }} mr={3}>
               <FormLabel style={{ width: 130 }}>Book cho:</FormLabel>
             </Box>
@@ -259,7 +261,7 @@ const Users: React.FC = () => {
             </Stack>
           )}
         </Grid>
-        <Grid item xs={6} style={{ paddingTop: 0 }}>
+        <Grid item xs={12} md={6} style={{ paddingTop: 0 }}>
           <Box display="flex" style={{ justifyContent: 'space-between' }}>
             <div />
             <Button

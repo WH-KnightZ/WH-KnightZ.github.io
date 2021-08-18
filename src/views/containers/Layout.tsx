@@ -38,7 +38,7 @@ const Layout: React.FC<RouteComponentProps> = () => {
       <div className="LayoutAdmin-main">
         <Page title="Vài Công Cụ Hỗ Trợ Tester" className="LayoutAdmin-main__page">
           <Container>
-            <Stack direction="row" alignItems="center" justifyContent="center" mb={5} pb={3}>
+            <Stack direction="row" alignItems="center" justifyContent="center" mb={2} pb={3}>
               <Typography variant="h4" gutterBottom>
                 {SCREENS_TITLE[screen]}
               </Typography>

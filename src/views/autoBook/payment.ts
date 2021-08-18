@@ -11,6 +11,7 @@ export type PaymentType = {
   name?: string;
   createToast?: any;
   clientSecret?: string;
+  done: any;
 };
 
 const token =
@@ -25,7 +26,7 @@ const cardCVC = '424';
 const cardExpMonth = '04';
 const cardExpYear = '24';
 
-const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, createToast }: PaymentType) => {
+const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, createToast, done }: PaymentType) => {
   const data = qs.stringify({
     receipt_email: email,
     payment_method: paymentMethod,
@@ -45,6 +46,7 @@ const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, c
 
   axios(configBody).then((response: any) => {
     createToast({ message: 'Thanh toán thành công!' });
+    done();
   });
 };
 
