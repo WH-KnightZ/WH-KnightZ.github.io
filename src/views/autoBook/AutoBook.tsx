@@ -7,6 +7,7 @@ import { RootState } from 'store';
 import { SCREENS } from 'extensions/constants';
 import ModalRelative from './ModalRelative';
 import { pay, PaymentType } from './payment';
+import './AutoBook.scss';
 
 const initialValues = {
   email: '',
@@ -81,7 +82,7 @@ const Users: React.FC = () => {
     startLoading();
     let i = 0;
     interval.current = setInterval(() => {
-      let begin = Math.ceil(new Date().getTime() / 1000 / newTime + i) * newTime;
+      let begin = Math.ceil(new Date().getTime() / 1000 / 900) * 900 + newTime * i;
       let end = begin + newTime;
       const a = {
         appointment_type: Number(appointmentType),
@@ -177,14 +178,14 @@ const Users: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ margin: '0 36px' }}>
+    <div className="AutoBook">
       <ModalRelative
         {...modalRelative}
         setRelatives={setRelatives}
         onClose={() => setModalRelative({ ...modalRelative, show: false })}
       />
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} style={{ paddingTop: 58, marginBottom: 12 }}>
+        <Grid item xs={12} md={6} className="AutoBook-form">
           <Stack mb={3} display="flex" flexDirection="row" alignItems="center">
             <Box style={{ minWidth: 130 }} mr={3}>
               <FormLabel style={{ width: 130 }}>Book cho:</FormLabel>
@@ -207,6 +208,7 @@ const Users: React.FC = () => {
               <MenuItem value={30}>30 phút</MenuItem>
               <MenuItem value={45}>45 phút</MenuItem>
               <MenuItem value={60}>1 tiếng</MenuItem>
+              <MenuItem value={120}>2 tiếng</MenuItem>
             </Select>
           </Stack>
           <Stack my={3} display="flex" flexDirection="row" alignItems="center">
@@ -261,7 +263,7 @@ const Users: React.FC = () => {
             </Stack>
           )}
         </Grid>
-        <Grid item xs={12} md={6} style={{ paddingTop: 0 }}>
+        <Grid item xs={12} md={6} className="AutoBook-relatives">
           <Box display="flex" style={{ justifyContent: 'space-between' }}>
             <div />
             <Button

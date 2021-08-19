@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import { Box, Link, Drawer, Typography, Avatar, Stack, FormLabel } from '@material-ui/core';
-import { MHidden, Logo, NavSection, Scrollbar } from 'components';
+import { MHidden, NavSection, Scrollbar } from 'components';
 import { useAuth } from 'extensions/hooks';
 import { imgLogo } from 'extensions/extensions';
 import { SCREENS } from 'extensions/constants';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 const sidebarConfig = [
   {
@@ -48,16 +50,15 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
-  const { pathname } = useLocation();
-
   const auth = useAuth();
+  const screen = useSelector((state: RootState) => state.screen);
 
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [screen]);
 
   const renderContent = (
     <Scrollbar
@@ -67,9 +68,7 @@ const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
       }}
     >
       <Box sx={{ px: 2.5, py: 3 }}>
-        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-          <Logo />
-        </Box>
+        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}></Box>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>

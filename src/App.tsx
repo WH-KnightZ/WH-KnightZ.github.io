@@ -4,7 +4,6 @@ import { loading } from 'extensions/extensions';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { ModalConfirm, ToastContainer } from 'components';
-import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const Layout = React.lazy(() => import('views/containers/Layout'));
 
@@ -20,7 +19,6 @@ const App: React.FC = () => {
           <Route path="/" component={Layout} />
         </Switch>
       </Suspense>
-      <MessengerCustomerChat pageId="102058578863470" appId="1995725250604441" language="vi_VN" />
     </>
   );
 };

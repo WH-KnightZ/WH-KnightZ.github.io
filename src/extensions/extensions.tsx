@@ -10,4 +10,4 @@ export const loading = (
 
 export const logo = '/static/logo.svg';
 
-export const imgLogo = <img src={logo} alt="logo" style={{ width: 120, height: 64 }} />;
+export const imgLogo = <img src={logo} alt="logo" style={{ width: 140 }} />;
