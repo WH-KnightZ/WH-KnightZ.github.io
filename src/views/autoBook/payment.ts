@@ -53,7 +53,7 @@ const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, c
 const paymentIntent = (payment: PaymentType) => {
   const { price, appointmentId, appointmentName, email } = payment;
   const data = qs.stringify({
-    amount: price,
+    amount: price || 99,
     currency: 'eur',
     'payment_method_types[]': type,
     'metadata[appointment_id]': appointmentId,
