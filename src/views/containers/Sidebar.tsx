@@ -67,9 +67,7 @@ const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
         // '& .simplebar-content': { height: '100%', display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3 }}>
-        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}></Box>
-      </Box>
+      <Box sx={{ px: 2.5, py: 3 }}></Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none" component={RouterLink} to="#">

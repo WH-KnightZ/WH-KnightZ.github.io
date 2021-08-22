@@ -21,7 +21,7 @@ type RelativeType = {
   last_name: string;
 };
 
-const Users: React.FC = () => {
+const AutoBook: React.FC = () => {
   const { showModalConfirm, hideModalConfirm } = useModalConfirm();
   const { startLoading, stopLoading } = useLoading();
   const { callApi } = useApi();
@@ -217,7 +217,6 @@ const Users: React.FC = () => {
             </Box>
             <FocusInput
               type="number"
-              label="Số lượng"
               value={amount.toString()}
               onChange={(e: any) => setAmount(e.target.value)}
               name="amount"
@@ -283,4 +282,4 @@ const Users: React.FC = () => {
   );
 };
 
-export default Users;
+export default AutoBook;

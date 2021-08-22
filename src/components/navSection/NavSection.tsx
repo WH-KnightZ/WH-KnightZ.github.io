@@ -1,5 +1,4 @@
 import React from 'react';
-import { matchPath } from 'react-router-dom';
 import { alpha, useTheme, styled } from '@material-ui/core/styles';
 import { Box, List, ListItemText, ListItemIcon, ListItemButton } from '@material-ui/core';
 import { MaterialIcon } from 'components';

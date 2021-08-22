@@ -60,7 +60,7 @@ export type ApiOutputType = {
 };
 
 export const callApiAction = (payload: ApiInputType, callback?: (result: ApiOutputType) => void) => {
-  const { method, api, body, loading, params, hideToast } = payload;
+  const { method, api, body, loading, params } = payload;
   let result: ApiOutputType = { code: 500, status: 'error' };
 
   return async (dispatch: any) => {
