@@ -4,7 +4,7 @@ import axios from 'axios';
 export type PaymentType = {
   appointmentId: string;
   appointmentName: string;
-  price: string;
+  price: number;
   paymentId?: string;
   paymentMethod?: string;
   email?: string;
@@ -53,7 +53,7 @@ const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, c
 const paymentIntent = (payment: PaymentType) => {
   const { price, appointmentId, appointmentName, email } = payment;
   const data = qs.stringify({
-    amount: price || 99,
+    amount: price,
     currency: 'eur',
     'payment_method_types[]': type,
     'metadata[appointment_id]': appointmentId,

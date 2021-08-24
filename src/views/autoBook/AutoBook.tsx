@@ -100,14 +100,13 @@ const AutoBook: React.FC = () => {
             : undefined,
         appointment_time_begin: begin,
         appointment_time_end: end,
-        cost: 54.0,
         selected_treatments_id: newAppointmentType === 1 ? 2 : undefined,
         customer_gender: 0,
-        phone_number: '+843456789',
+        phone_number: '+84366918587',
         street: 'Ha Noi',
-        postcode: '0809',
-        no: '0809',
-        place: '0809',
+        postcode: '240897',
+        no: '240897',
+        place: '240897',
       };
       callApi({ method: 'post', api: 'consulting/appointments', body: a }, ({ status, data }) => {
         const done = () =>
@@ -121,7 +120,7 @@ const AutoBook: React.FC = () => {
           const payment: PaymentType = {
             appointmentName: treatments?.diseases_title,
             appointmentId: data.id,
-            price: treatments?.price,
+            price: (treatments?.price || 55) * 100,
             email: auth.email,
             name: auth.first_name + ' ' + auth.last_name,
             createToast,
@@ -168,7 +167,7 @@ const AutoBook: React.FC = () => {
         title: 'Thông Báo',
         content: 'Đăng nhập đi đã bạn ê!',
         confirm: {
-          text: 'Okii',
+          text: 'Hiểu rùi',
           action: () => {
             changeScreen(SCREENS.LOGIN);
             hideModalConfirm();
