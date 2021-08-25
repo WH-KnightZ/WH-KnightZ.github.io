@@ -20,14 +20,14 @@ interface Props {
 }
 
 const ModalRelative: React.FC<Props> = (props) => {
-  let { show, type, onClose, initialValues, setRelatives } = props;
-  const relative = ls.get('relative');
-  if (ls && type === 'create')
-    initialValues = {
-      email: relative?.email || '',
-      first_name: relative?.first_name || '',
-      last_name: relative?.last_name || '',
-    };
+  const { show, type, onClose, initialValues, setRelatives } = props;
+  // const relative = ls.get('relative');
+  // if (relative && type === 'create')
+  //   initialValues = {
+  //     email: relative?.email || '',
+  //     first_name: relative?.first_name || '',
+  //     last_name: relative?.last_name || '',
+  //   };
 
   const formik = useFormik({
     initialValues,
@@ -38,7 +38,7 @@ const ModalRelative: React.FC<Props> = (props) => {
         if (relatives.findIndex((item: any) => item.email === email) !== -1) return relatives;
         return [{ email, first_name, last_name }, ...relatives];
       });
-      if (type === 'create') ls.set('relative', { email, first_name, last_name });
+      // if (type === 'create') ls.set('relative', { email, first_name, last_name });
       onClose();
     },
   });

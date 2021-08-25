@@ -8,6 +8,7 @@ import { SCREENS } from 'extensions/constants';
 import ModalRelative from './ModalRelative';
 import { pay, PaymentType } from './payment';
 import './AutoBook.scss';
+import { ls } from 'extensions/extensions';
 
 const initialValues = {
   email: '',
@@ -28,9 +29,22 @@ const AutoBook: React.FC = () => {
   const { changeScreen } = useScreen();
   const { createToast } = useToasts();
   const auth = useAuth();
+  const relativesLS = ls.get('relatives') || [
+    {
+      email: 'hang.bui@boot.ai',
+      first_name: 'Hang',
+      last_name: 'Bui',
+    },
+    {
+      email: 'nguyenkhanhsl1997@gmail.com',
+      // email: 'lethihuong_t61@hus.edu.vn',
+      first_name: 'Dealer',
+      last_name: '319',
+    },
+  ];
 
   const [appointmentType, setAppointmentType] = useState(1);
-  const [amount, setAmount] = useState(15);
+  const [amount, setAmount] = useState(10);
   const [time, setTime] = useState(15);
   const [amountOK, setAmountOK] = useState(0);
   const [modalRelative, setModalRelative] = useState<{ type: 'create' | 'update'; show: boolean; initialValues: any }>({
@@ -39,18 +53,7 @@ const AutoBook: React.FC = () => {
     initialValues,
   });
   const [autoPay, setAutoPay] = useState(true);
-  const [relatives, setRelatives] = useState<RelativeType[]>([
-    {
-      email: 'hang.bui@boot.ai',
-      first_name: 'Hang',
-      last_name: 'Bui',
-    },
-    {
-      email: 'lethihuong_t61@hus.edu.vn',
-      first_name: 'Huong',
-      last_name: 'Le',
-    },
-  ]);
+  const [relatives, setRelatives] = useState<RelativeType[]>(relativesLS);
 
   const interval = useRef<any>();
 
@@ -84,31 +87,32 @@ const AutoBook: React.FC = () => {
     interval.current = setInterval(() => {
       let begin = Math.ceil(new Date().getTime() / 1000 / 900) * 900 + newTime * i;
       let end = begin + newTime;
-      const a = {
+      const body = {
         appointment_type: Number(appointmentType),
         result_survey: newAppointmentType === 1 ? {} : undefined,
         relatives:
           newAppointmentType === 1
-            ? [
-                {
-                  email: 'nguyenkhanhsl1997@gmail.com',
-                  first_name: 'Khanh',
-                  last_name: 'Nguyen',
-                },
-                ...relatives,
-              ]
-            : undefined,
+            ? relatives
+            : // [
+              //     {
+              //       email: 'nguyenkhanhsl1997@gmail.com',
+              //       first_name: 'Khanh',
+              //       last_name: 'Nguyen',
+              //     },
+              //     ...relatives,
+              //   ]
+              undefined,
         appointment_time_begin: begin,
         appointment_time_end: end,
         selected_treatments_id: newAppointmentType === 1 ? 2 : undefined,
         customer_gender: 0,
         phone_number: '+84366918587',
         street: 'Ha Noi',
-        postcode: '240897',
-        no: '240897',
-        place: '240897',
+        postcode: '2408',
+        no: '2408',
+        place: '2408',
       };
-      callApi({ method: 'post', api: 'consulting/appointments', body: a }, ({ status, data }) => {
+      callApi({ method: 'post', api: 'consulting/appointments', body }, ({ status, data }) => {
         const done = () =>
           setAmountOK((x) => {
             const newX = x + 1;
@@ -133,6 +137,10 @@ const AutoBook: React.FC = () => {
       if (i >= newAmount) clearInterval(interval.current);
     }, 500);
   };
+
+  useEffect(() => {
+    ls.set('relatives', relatives);
+  }, [relatives]);
 
   const renderRelative = (relative: RelativeType) => {
     return (
