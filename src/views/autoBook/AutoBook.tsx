@@ -10,6 +10,13 @@ import { pay, PaymentType } from './payment';
 import './AutoBook.scss';
 import { ls } from 'extensions/extensions';
 
+const timeBlocks: any = {
+  '15': '0da3c6d403e14c8da465ee145b4476f8',
+  '30': '0da3c6d403e14c8da465ee145b4476f9',
+  '45': '0da3c6d403e14c8da465ee145b4476f0',
+  '60': '0da3c6d403e14c8da465ee145b4476f1',
+};
+
 const initialValues = {
   email: '',
   first_name: '',
@@ -46,6 +53,7 @@ const AutoBook: React.FC = () => {
   const [appointmentType, setAppointmentType] = useState(1);
   const [amount, setAmount] = useState(10);
   const [time, setTime] = useState(15);
+  const [after, setAfter] = useState(0);
   const [amountOK, setAmountOK] = useState(0);
   const [modalRelative, setModalRelative] = useState<{ type: 'create' | 'update'; show: boolean; initialValues: any }>({
     show: false,
@@ -81,30 +89,23 @@ const AutoBook: React.FC = () => {
     setAmountOK(0);
     const newAmount = Number(amount);
     const newTime = Number(time) * 60;
+    const newAfter = Number(after);
     const newAppointmentType = Number(appointmentType);
+    const isNurse = newAppointmentType === 1;
     startLoading();
     let i = 0;
     interval.current = setInterval(() => {
-      let begin = Math.ceil(new Date().getTime() / 1000 / 900) * 900 + newTime * i;
+      let begin = Math.ceil(new Date().getTime() / 1000 / 900) * 900 + newTime * i + newAfter * 900;
       let end = begin + newTime;
       const body = {
-        appointment_type: Number(appointmentType),
-        result_survey: newAppointmentType === 1 ? {} : undefined,
-        relatives:
-          newAppointmentType === 1
-            ? relatives
-            : // [
-              //     {
-              //       email: 'nguyenkhanhsl1997@gmail.com',
-              //       first_name: 'Khanh',
-              //       last_name: 'Nguyen',
-              //     },
-              //     ...relatives,
-              //   ]
-              undefined,
+        appointment_type: newAppointmentType,
+        result_survey: isNurse ? {} : undefined,
+        relatives: isNurse ? relatives : undefined,
         appointment_time_begin: begin,
-        appointment_time_end: end,
-        selected_treatments_id: newAppointmentType === 1 ? 2 : undefined,
+        appointment_time_end: isNurse ? end : undefined,
+        selected_treatments_id: isNurse ? 2 : undefined,
+        time_block_id: isNurse ? undefined : timeBlocks[time],
+        recurring_calendar_id: isNurse ? undefined : '',
         customer_gender: 0,
         phone_number: '+84366918587',
         street: 'Ha Noi',
@@ -215,7 +216,6 @@ const AutoBook: React.FC = () => {
               <MenuItem value={30}>30 phút</MenuItem>
               <MenuItem value={45}>45 phút</MenuItem>
               <MenuItem value={60}>1 tiếng</MenuItem>
-              <MenuItem value={120}>2 tiếng</MenuItem>
             </Select>
           </Stack>
           <Stack my={3} display="flex" flexDirection="row" alignItems="center">
@@ -232,10 +232,26 @@ const AutoBook: React.FC = () => {
           </Stack>
           <Stack my={3} display="flex" flexDirection="row" alignItems="center">
             <Box style={{ minWidth: 130 }} mr={3}>
+              <FormLabel style={{ width: 130 }}>Sau 15 phút:</FormLabel>
+            </Box>
+            <FocusInput
+              type="number"
+              value={after.toString()}
+              onChange={(e: any) => setAfter(e.target.value)}
+              name="after"
+              disabled={loading}
+            />
+          </Stack>
+          <Stack my={3} display="flex" flexDirection="row" alignItems="center">
+            <Box style={{ minWidth: 130 }} mr={3}>
               <FormLabel style={{ width: 130 }}>Thanh toán luôn:</FormLabel>
             </Box>
             <Checkbox checked={autoPay} onChange={() => setAutoPay(!autoPay)} style={{ marginLeft: 10 }} />
           </Stack>
+          <i style={{ fontSize: 13 }}>
+            Lưu ý: Ở trường Sau 15p, khi nhập số lượng, thời gian book sẽ sau hiện tại 15 * số lượng (phút), nếu muốn
+            book sau 1 tiếng có thể nhập 4.
+          </i>
           <Stack display="flex" flexDirection="row" my={3}>
             <LoadingButton
               loading={loading}
