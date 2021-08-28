@@ -125,7 +125,7 @@ const AutoBook: React.FC = () => {
           const payment: PaymentType = {
             appointmentName: treatments?.diseases_title,
             appointmentId: data.id,
-            price: (treatments?.price || 55) * 100,
+            price: (isNurse ? treatments?.price || 55 : (Number(time) / 15) * 12.5) * 100,
             email: auth.email,
             name: auth.first_name + ' ' + auth.last_name,
             createToast,
