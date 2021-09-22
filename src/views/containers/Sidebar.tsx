@@ -21,6 +21,11 @@ const sidebarConfig = [
     icon: 'book_online',
   },
   {
+    title: 'Fake Time',
+    path: SCREENS.FAKE_TIME,
+    icon: 'update',
+  },
+  {
     title: 'Chưa Nghĩ Ra',
     path: SCREENS.MORE,
     icon: 'more_time',
@@ -61,12 +66,7 @@ const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
   }, [screen]);
 
   const renderContent = (
-    <Scrollbar
-      sx={{
-        height: '100%',
-        // '& .simplebar-content': { height: '100%', display: 'flex', flexDirection: 'column' },
-      }}
-    >
+    <Scrollbar sx={{ height: '100%' }}>
       <Box sx={{ px: 2.5, py: 3 }}></Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -74,7 +74,7 @@ const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
           <AccountStyle>
             <Avatar src={auth.avatar_url} alt="avatar" />
             <Box sx={{ ml: 2 }} style={{ overflow: 'hidden' }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+              <Typography variant="subtitle2" sx={{ color: 'text.primary', whiteSpace: 'nowrap' }}>
                 {auth.full_name}
               </Typography>
               <Typography

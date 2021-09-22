@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react';
 interface Props {
   autoFocus?: boolean;
   autoComplete?: string;
+  placeholder?: string;
   type?: string;
   name: string;
   value?: string;

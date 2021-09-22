@@ -9,9 +9,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store';
 import Login from 'views/login/Login';
 import AutoBook from 'views/autoBook/AutoBook';
+import FakeTime from 'views/fakeTime/FakeTime';
 import More from 'views/more/More';
 
-const { AUTO_BOOK, MORE } = SCREENS;
+const { AUTO_BOOK, FAKE_TIME, MORE } = SCREENS;
 
 const Layout: React.FC<RouteComponentProps> = () => {
   const screen = useSelector((state: RootState) => state.screen);
@@ -24,6 +25,9 @@ const Layout: React.FC<RouteComponentProps> = () => {
       break;
     case MORE:
       Render = More;
+      break;
+    case FAKE_TIME:
+      Render = FakeTime;
       break;
 
     default:
@@ -38,8 +42,8 @@ const Layout: React.FC<RouteComponentProps> = () => {
       <div className="LayoutAdmin-main">
         <Page title="Vài Công Cụ Hỗ Trợ Tester" className="LayoutAdmin-main__page">
           <Container>
-            <Stack direction="row" alignItems="center" justifyContent="center" mb={1} pb={3}>
-              <Typography variant="h4" gutterBottom>
+            <Stack direction="row" alignItems="center" justifyContent="center" mb={1} pb={2}>
+              <Typography variant="h4" gutterBottom style={{ marginBottom: 0 }}>
                 {SCREENS_TITLE[screen]}
               </Typography>
             </Stack>
