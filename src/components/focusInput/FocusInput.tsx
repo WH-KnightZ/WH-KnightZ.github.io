@@ -21,6 +21,7 @@ interface Props {
   margin?: string;
   readOnly?: boolean;
   size?: any;
+  InputProps?: any;
 }
 
 const FocusInput: React.FC<Props> = (props) => {
@@ -38,6 +39,7 @@ const FocusInput: React.FC<Props> = (props) => {
     invalid: oldInvalid,
     variant = 'outlined',
     margin,
+    InputProps,
     ...rest
   } = props;
 
@@ -86,7 +88,7 @@ const FocusInput: React.FC<Props> = (props) => {
                 </InputAdornment>
               ),
             }
-          : undefined
+          : InputProps
       }
       error={invalid}
       helperText={invalid && error}
