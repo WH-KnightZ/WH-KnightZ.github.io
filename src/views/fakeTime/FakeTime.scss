@@ -1,4 +1,12 @@
 .FakeTime {
   max-width: 640px;
   margin: 0 auto;
+
+  .adornment {
+    font-size: 15px;
+
+    @media screen and (max-width: 480px) {
+      font-size: 13px;
+    }
+  }
 }

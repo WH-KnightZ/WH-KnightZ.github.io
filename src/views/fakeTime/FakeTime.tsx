@@ -33,8 +33,8 @@ const FakeTime: React.FC = () => {
   return (
     <div className="FakeTime">
       <Stack my={2} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 200 }} mr={3}>
-          <FormLabel style={{ width: 200 }}>Appointment/Meeting Id:</FormLabel>
+        <Box style={{ minWidth: 150 }} mr={3}>
+          <FormLabel style={{ width: '100%' }}>Appointment Id:</FormLabel>
         </Box>
         <FocusInput
           value={id}
@@ -49,8 +49,8 @@ const FakeTime: React.FC = () => {
         />
       </Stack>
       <Stack my={2} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 200 }} mr={3}>
-          <FormLabel style={{ width: 200 }}>Thời gian bắt đầu:</FormLabel>
+        <Box style={{ minWidth: 150 }} mr={3}>
+          <FormLabel style={{ width: '100%' }}>Thời gian bắt đầu:</FormLabel>
         </Box>
         <FocusInput
           type="number"
@@ -59,12 +59,18 @@ const FakeTime: React.FC = () => {
           onChange={(e: any) => setBeginTime(e.target.value)}
           name="begin_time"
           disabled={loading}
-          InputProps={{ endAdornment: <InputAdornment position="end">phút trước</InputAdornment> }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <div className="adornment">phút trước</div>
+              </InputAdornment>
+            ),
+          }}
         />
       </Stack>
       <Stack my={2} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 200 }} mr={3}>
-          <FormLabel style={{ width: 200 }}>Thời gian kết thúc:</FormLabel>
+        <Box style={{ minWidth: 150 }} mr={3}>
+          <FormLabel style={{ width: '100%' }}>Thời gian kết thúc:</FormLabel>
         </Box>
         <FocusInput
           type="number"
@@ -73,7 +79,13 @@ const FakeTime: React.FC = () => {
           onChange={(e: any) => setEndTime(e.target.value)}
           name="end_time"
           disabled={loading}
-          InputProps={{ endAdornment: <InputAdornment position="end">phút sau</InputAdornment> }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <div className="adornment">phút sau</div>
+              </InputAdornment>
+            ),
+          }}
         />
       </Stack>
       <Stack my={2} display="flex" flexDirection="row" alignItems="center">
