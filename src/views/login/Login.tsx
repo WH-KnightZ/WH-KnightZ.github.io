@@ -44,6 +44,7 @@ const Login: React.FC = () => {
               email,
               full_name: data.first_name + ' ' + data.last_name,
               avatar_url: data.avatar,
+              env,
             });
             changeScreen(SCREENS.AUTO_BOOK);
           }

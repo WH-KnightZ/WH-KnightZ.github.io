@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, FormLabel, Box, Checkbox, InputAdornment } from '@material-ui/core';
+import { Stack, FormLabel, Box, Checkbox, InputAdornment, Grid } from '@material-ui/core';
 import { FocusInput, LoadingButton } from 'components';
 import { useApi } from 'extensions/hooks';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ const FakeTime: React.FC = () => {
   const [beginTime, setBeginTime] = useState('30');
   const [endTime, setEndTime] = useState('30');
   const [reloadStart, setReloadStart] = useState(false);
+  const [envPrd, setEnvPrd] = useState(false);
 
   const loading = useSelector((state: RootState) => state.loading);
 
@@ -24,7 +25,9 @@ const FakeTime: React.FC = () => {
     const time_end = currentTime + Number(endTime || 0) * 60;
     callApi({
       method: 'put',
-      api: 'https://ktg3nkjw3g.execute-api.eu-central-1.amazonaws.com/HBTestConsulting/api/v1/appointments',
+      api: `https://ktg3nkjw3g.execute-api.eu-central-1.amazonaws.com/HBTestConsulting/api/v1/appointments${
+        envPrd ? '-prd' : ''
+      }`,
       body: { id: id, time_begin, time_end, reload_start: reloadStart },
       loading: true,
     });
@@ -89,10 +92,28 @@ const FakeTime: React.FC = () => {
         />
       </Stack>
       <Stack my={2} display="flex" flexDirection="row" alignItems="center">
-        <Box style={{ minWidth: 200 }} mr={3}>
-          <FormLabel style={{ width: 200 }}>Xoá trạng thái start:</FormLabel>
-        </Box>
-        <Checkbox checked={reloadStart} onChange={() => setReloadStart(!reloadStart)} style={{ marginLeft: 10 }} />
+        <Grid container>
+          <Grid item xs={12} md={6}>
+            <Box display="flex" alignItems="center">
+              <Box style={{ minWidth: 150 }} mr={3}>
+                <FormLabel style={{ width: '100%' }}>Xoá trạng thái start:</FormLabel>
+              </Box>
+              <Checkbox
+                checked={reloadStart}
+                onChange={() => setReloadStart(!reloadStart)}
+                style={{ marginLeft: 10 }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box display="flex" alignItems="center">
+              <Box style={{ minWidth: 150 }} mr={3}>
+                <FormLabel style={{ width: '100%' }}>Môi trường PRD:</FormLabel>
+              </Box>
+              <Checkbox checked={envPrd} onChange={() => setEnvPrd(!envPrd)} style={{ marginLeft: 10 }} />
+            </Box>
+          </Grid>
+        </Grid>
       </Stack>
       <i style={{ fontSize: 13 }}>
         - Nếu appointment đã bị cancel hoặc finish sẽ tự động chuyển sang accept, vậy nên đôi khi có thể dùng lại các

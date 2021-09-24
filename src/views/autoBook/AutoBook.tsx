@@ -131,7 +131,7 @@ const AutoBook: React.FC = () => {
             createToast,
             done,
           };
-          pay(payment);
+          pay(payment, auth.env === 'PRD');
         } else done();
       });
       i += 1;

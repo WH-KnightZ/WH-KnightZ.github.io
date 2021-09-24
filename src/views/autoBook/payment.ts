@@ -26,6 +26,8 @@ const cardCVC = '424';
 const cardExpMonth = '04';
 const cardExpYear = '24';
 
+const messageSuccess = { message: 'Thanh toán thành công!' };
+
 const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, createToast, done }: PaymentType) => {
   const data = qs.stringify({
     receipt_email: email,
@@ -44,8 +46,8 @@ const confirmPayment = ({ name, email, paymentId, clientSecret, paymentMethod, c
     data: data,
   };
 
-  axios(configBody).then((response: any) => {
-    createToast({ message: 'Thanh toán thành công!' });
+  axios(configBody).then(() => {
+    createToast(messageSuccess);
     done();
   });
 };
@@ -108,6 +110,17 @@ const createPaymentMethod = (payment: PaymentType) => {
     });
 };
 
-export const pay = (payment: PaymentType) => {
-  createPaymentMethod(payment);
+export const pay = (payment: PaymentType, envPrd?: boolean) => {
+  if (!envPrd) createPaymentMethod(payment);
+  else {
+    const configBody: any = {
+      method: 'post',
+      url: 'https://ktg3nkjw3g.execute-api.eu-central-1.amazonaws.com/HBTestConsulting/api/v1/pay',
+      data: { id: payment.appointmentId },
+    };
+    axios(configBody).then(() => {
+      payment.createToast(messageSuccess);
+      payment.done();
+    });
+  }
 };
