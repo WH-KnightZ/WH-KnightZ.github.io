@@ -118,7 +118,7 @@ const FakeTime: React.FC = () => {
       <i style={{ fontSize: 13 }}>
         - Nếu appointment đã bị cancel hoặc finish sẽ tự động chuyển sang accept, vậy nên đôi khi có thể dùng lại các
         meeting đã finish, đỡ mất công book lần nữa.
-        <br />- Nếu muốn test case popup 10s có thể đặt time finish là khoảng 32p trước (nhập -32 tại ô time end) sau đó
+        <br />- Nếu muốn test case popup 10s có thể đặt time finish là khoảng 28p trước (nhập -28 tại ô time end) sau đó
         vào call đợi 2p
       </i>
       <Stack display="flex" flexDirection="row" my={3}>
