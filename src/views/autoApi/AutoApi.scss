@@ -1,0 +1,22 @@
+.AutoApi {
+  margin: 0 20px;
+
+  &-form.MuiGrid-item {
+    padding-top: 58px;
+    margin-bottom: 12px;
+  }
+
+  &-relatives.MuiGrid-item {
+    padding-top: 0;
+  }
+
+  @media screen and (max-width: 900px) {
+    &-form.MuiGrid-item {
+      padding-top: 24px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    margin: 0;
+  }
+}

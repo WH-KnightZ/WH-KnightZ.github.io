@@ -11,6 +11,11 @@ import { RootState } from 'store';
 
 const sidebarConfig = [
   {
+    title: 'Gọi Api Tự Động',
+    path: SCREENS.AUTO_API,
+    icon: 'api',
+  },
+  {
     title: 'Đăng Nhập',
     path: SCREENS.LOGIN,
     icon: 'account_circle',
@@ -93,7 +98,7 @@ const Sidebar: React.FC<Props> = ({ isOpenSidebar, onCloseSidebar }) => {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
+      <Box sx={{ px: 2.5, pb: 3, mt: 5 }}>
         <Stack
           alignItems="center"
           spacing={3}

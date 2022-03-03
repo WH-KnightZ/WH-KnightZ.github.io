@@ -7,12 +7,13 @@ import { Container, Stack, Typography } from '@material-ui/core';
 import { SCREENS_TITLE, SCREENS } from 'extensions/constants';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import AutoApi from 'views/autoApi/AutoApi';
 import Login from 'views/login/Login';
 import AutoBook from 'views/autoBook/AutoBook';
 import FakeTime from 'views/fakeTime/FakeTime';
 import More from 'views/more/More';
 
-const { AUTO_BOOK, FAKE_TIME, MORE } = SCREENS;
+const { AUTO_API, AUTO_BOOK, FAKE_TIME, MORE } = SCREENS;
 
 const Layout: React.FC<RouteComponentProps> = () => {
   const screen = useSelector((state: RootState) => state.screen);
@@ -20,6 +21,9 @@ const Layout: React.FC<RouteComponentProps> = () => {
   let Render;
 
   switch (screen) {
+    case AUTO_API:
+      Render = AutoApi;
+      break;
     case AUTO_BOOK:
       Render = AutoBook;
       break;

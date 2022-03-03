@@ -60,7 +60,7 @@ export type ApiOutputType = {
 };
 
 export const callApiAction = (payload: ApiInputType, callback?: (result: ApiOutputType) => void) => {
-  const { method, api, body, loading, params } = payload;
+  const { method, api, body, loading, params, hideToast } = payload;
   let result: ApiOutputType = { code: 500, status: 'error' };
 
   return async (dispatch: any) => {
@@ -79,12 +79,13 @@ export const callApiAction = (payload: ApiInputType, callback?: (result: ApiOutp
       console.log(err);
     }
     // Show toast if call api error or api is not get
-    dispatch(
-      createToast({
-        message: result.message || 'Something went wrong, please try again!',
-        type: result.status,
-      }),
-    );
+    !hideToast &&
+      dispatch(
+        createToast({
+          message: result.message || 'Something went wrong, please try again!',
+          type: result.status,
+        }),
+      );
     callback?.(result);
     if (loading) dispatch(stopLoading());
   };
