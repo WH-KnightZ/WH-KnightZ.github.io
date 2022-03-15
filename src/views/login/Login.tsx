@@ -12,7 +12,8 @@ import { RootState } from 'store';
 import { baseURLs } from 'extensions/configs';
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('email_not_valid').required(),
+  phone: Yup.string().required(),
+  // email: Yup.string().email('email_not_valid').required(),
   password: Yup.string().required(),
 });
 
@@ -22,28 +23,32 @@ const Login: React.FC = () => {
   const { changeScreen } = useScreen();
   const { updateProfile } = useAuth();
   const user = ls.get('user');
-  const email = user?.email || 'lehuong.hp9794@gmail.com';
-  const password = user?.password || 'Admin@1234';
+  const phone = user?.phone || '010203';
+  // const email = user?.email || 'lehuong.hp9794@gmail.com';
+  const password = user?.password || 'admin@1234';
   const [env, setEnv] = useState('STG');
 
   const formik = useFormik({
     initialValues: {
-      email,
+      phone,
       password,
     },
     validationSchema: LoginSchema,
-    onSubmit: ({ email, password }) => {
+    onSubmit: ({ phone, password }) => {
       callApi(
-        { method: 'post', api: 'user/auth/signin', body: { email, password }, loading: true },
+        {
+          method: 'post',
+          api: 'https://api.shop.stg.inreal.boot.ai/api/v1/auth/login',
+          body: { phone, password },
+          loading: true,
+        },
         ({ status, data }) => {
           if (status === 'success') {
-            axios.defaults.headers.common['Authorization'] = data.id_token;
-            ls.set('user', { email, password });
+            axios.defaults.headers.common['Authorization'] = data.access_token;
+            ls.set('user', { phone, password });
             updateProfile({
               ...data,
-              email,
-              full_name: data.first_name + ' ' + data.last_name,
-              avatar_url: data.avatar,
+              phone,
               env,
             });
             changeScreen(SCREENS.AUTO_BOOK);
@@ -67,12 +72,12 @@ const Login: React.FC = () => {
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={3} my={3}>
             <FocusInput
-              autoComplete="email"
-              type="email"
-              label="Email"
-              {...getFieldProps('email')}
-              invalid={!!values.email && !!errors.email}
-              error="Email không hợp lệ!"
+              autoComplete="phone"
+              type="phone"
+              label="Điện thoại"
+              {...getFieldProps('phone')}
+              invalid={!!values.phone && !!errors.phone}
+              // error="Email không hợp lệ!"
               disabled={loading}
             />
 

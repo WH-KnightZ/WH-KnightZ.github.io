@@ -111,6 +111,9 @@ const createPaymentMethod = (payment: PaymentType) => {
 };
 
 export const pay = (payment: PaymentType, envPrd?: boolean) => {
+  payment.done();
+  return;
+
   if (!envPrd) createPaymentMethod(payment);
   else {
     const configBody: any = {

@@ -25,9 +25,7 @@ const FakeTime: React.FC = () => {
     const time_end = currentTime + Number(endTime || 0) * 60;
     callApi({
       method: 'put',
-      api: `https://ktg3nkjw3g.execute-api.eu-central-1.amazonaws.com/HBTestConsulting/api/v1/appointments${
-        envPrd ? '-prd' : ''
-      }`,
+      api: `https://xurbhazai4.execute-api.ap-southeast-1.amazonaws.com/K_Support/fake-time${envPrd ? '-prd' : ''}`,
       body: { id: id, time_begin, time_end, reload_start: reloadStart },
       loading: true,
     });

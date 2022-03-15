@@ -1,5 +1,5 @@
 export const baseURLs: any = {
-  STG: 'https://stg.fit.boot.ai',
-  UAT: 'https://hb.api.uat.deu.boot.ai/api/v1/',
-  PRD: 'https://hb.api.prd.deu.boot.ai/api/v1/',
+  STG: 'https://api.stg.inreal.boot.ai/api/v1/',
+  UAT: 'https://api.uat.inreal.boot.ai/api/v1/',
+  PRD: 'https://api.prd.inreal.boot.ai/api/v1/',
 };

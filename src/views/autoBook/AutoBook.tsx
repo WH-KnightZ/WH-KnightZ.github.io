@@ -171,7 +171,7 @@ const AutoBook: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!auth.id_token)
+    if (!auth.access_token)
       showModalConfirm({
         title: 'Thông Báo',
         content: 'Đăng nhập đi đã bạn ê!',
